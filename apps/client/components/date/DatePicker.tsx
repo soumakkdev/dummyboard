@@ -32,26 +32,20 @@ export function DatePicker(props: IDatePicker) {
 
 	return (
 		<Popover open={isOpen} onOpenChange={setIsOpen}>
-			<PopoverTrigger
-				className={cn(
-					'w-full px-3 py-1 h-9 text-left font-normal border rounded-md flex justify-between items-center',
-					!value && 'text-muted-foreground',
-					className
-				)}
-				type="button"
-				id={id}
-			>
-				{value ? (
-					dayjs(value)
-						.local()
-						.tz(timezone || userTimezone)
-						.format('dd/MM/yyyy')
-				) : (
-					<span>Pick a date</span>
-				)}
-				<CalendarIcon className="ml-auto h-4 w-4 opacity-80" />
+			<PopoverTrigger asChild id={id}>
+				<Button variant="outline" type="button">
+					{value ? (
+						dayjs(value)
+							.local()
+							.tz(timezone || userTimezone)
+							.format('dd/MM/yyyy')
+					) : (
+						<span>Pick a date</span>
+					)}
+					<CalendarIcon className="ml-auto h-4 w-4 opacity-80" />
+				</Button>
 			</PopoverTrigger>
-			<PopoverContent className="!w-auto !p-0" align="start">
+			<PopoverContent className="w-auto p-0" align="start">
 				<Calendar
 					fromDate={minDate ? dayjs(minDate).toDate() : undefined}
 					toDate={maxDate ? dayjs(maxDate).toDate() : undefined}

@@ -50,23 +50,18 @@ export function TimePicker(props: ITimePicker) {
 
 	return (
 		<Popover open={isOpen} onOpenChange={setIsOpen}>
-			<PopoverTrigger
-				className={cn(
-					'w-full px-3 py-1 h-9 text-left font-normal border rounded-md flex justify-between items-center',
-					!value && 'text-muted-foreground'
-				)}
-				type="button"
-				id={id}
-			>
-				{value && hour !== null && minute !== null ? (
-					dayjs(value)
-						.local()
-						.tz(timezone || userTimezone)
-						.format('HH:mm')
-				) : (
-					<span>Pick a time</span>
-				)}
-				<ClockIcon className="ml-auto h-4 w-4 opacity-80" />
+			<PopoverTrigger asChild id={id}>
+				<Button variant="outline" type="button">
+					{value && hour !== null && minute !== null ? (
+						dayjs(value)
+							.local()
+							.tz(timezone || userTimezone)
+							.format('HH:mm')
+					) : (
+						<span>Pick a time</span>
+					)}
+					<ClockIcon className="ml-auto h-4 w-4 opacity-80" />
+				</Button>
 			</PopoverTrigger>
 
 			<PopoverContent className="w-auto p-0" align="start">

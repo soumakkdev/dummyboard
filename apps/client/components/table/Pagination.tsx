@@ -126,119 +126,123 @@ export function Pagination({
 			<div className="flex items-center gap-2">
 				{/* Jump to first page button */}
 				{!hideJumpBtns && (
-					<Tooltip
-						content={
+					<Tooltip>
+						<Tooltip.Trigger>
+							<Button
+								disabled={currentPage === 1 || isLoading}
+								onClick={() => {
+									// scrollTableToTop()
+									jumpToPage(1)
+								}}
+								type="button"
+								variant="outline"
+								className="h-10 w-10 rounded-full flex items-center justify-center p-0"
+								// className='h-8 justify-center border text-primary px-2 md:px-4 py-1 font-bold'
+							>
+								<ChevronsLeft className="w-5 h-5 mr-0.5 text-muted-foreground" />
+							</Button>
+						</Tooltip.Trigger>
+						<Tooltip.Content>
 							<div>
 								<p className="text-white text-xs font-light">Go to first page</p>
 							</div>
-						}
-					>
+						</Tooltip.Content>
+					</Tooltip>
+				)}
+
+				{/* Go to prev page button */}
+				<Tooltip>
+					<Tooltip.Trigger>
 						<Button
 							disabled={currentPage === 1 || isLoading}
 							onClick={() => {
 								// scrollTableToTop()
-								jumpToPage(1)
+								handlePrev()
 							}}
 							type="button"
 							variant="outline"
 							className="h-10 w-10 rounded-full flex items-center justify-center p-0"
 							// className='h-8 justify-center border text-primary px-2 md:px-4 py-1 font-bold'
 						>
-							<ChevronsLeft className="w-5 h-5 mr-0.5 text-muted-foreground" />
+							<ChevronLeft className="w-5 h-5 mr-0.5 text-muted-foreground" />
 						</Button>
-					</Tooltip>
-				)}
-
-				{/* Go to prev page button */}
-				<Tooltip
-					content={
+					</Tooltip.Trigger>
+					<Tooltip.Content>
 						<div>
 							<p className="text-white text-xs font-light">Prev</p>
 						</div>
-					}
-				>
-					<Button
-						disabled={currentPage === 1 || isLoading}
-						onClick={() => {
-							// scrollTableToTop()
-							handlePrev()
-						}}
-						type="button"
-						variant="outline"
-						className="h-10 w-10 rounded-full flex items-center justify-center p-0"
-						// className='h-8 justify-center border text-primary px-2 md:px-4 py-1 font-bold'
-					>
-						<ChevronLeft className="w-5 h-5 mr-0.5 text-muted-foreground" />
-					</Button>
+					</Tooltip.Content>
 				</Tooltip>
 
 				{/* Page no. input field */}
-				<Tooltip
-					content={
+				<Tooltip>
+					<Tooltip.Trigger>
+						<PageInput
+							currentPage={currentPage}
+							jumpToPage={(pgNo) => {
+								// scrollTableToTop()
+								jumpToPage(pgNo)
+							}}
+							totalNoOfPages={totalNoOfPages}
+							isDisabled={!!isLoading}
+						/>
+					</Tooltip.Trigger>
+					<Tooltip.Content>
 						<div>
 							<p className="text-white text-xs font-light">Go to page no.</p>
 						</div>
-					}
-				>
-					<PageInput
-						currentPage={currentPage}
-						jumpToPage={(pgNo) => {
-							// scrollTableToTop()
-							jumpToPage(pgNo)
-						}}
-						totalNoOfPages={totalNoOfPages}
-						isDisabled={!!isLoading}
-					/>
+					</Tooltip.Content>
 				</Tooltip>
 
 				{/* Show current page no info */}
 				<p className="text-sm  whitespace-nowrap">of {totalNoOfPages}</p>
 
 				{/* Go to next page button */}
-				<Tooltip
-					content={
-						<div>
-							<p className="text-white text-xs font-light">Next</p>
-						</div>
-					}
-				>
-					<Button
-						disabled={lastPage || currentPage * itemsPerPage >= totalCount || isLoading}
-						onClick={() => {
-							// scrollTableToTop()
-							handleNext?.()
-						}}
-						type="button"
-						variant="outline"
-						className="h-10 w-10 rounded-full flex items-center justify-center p-0"
-						// className='h-8 justify-center border text-primary px-2 md:px-4 py-1 font-bold'
-					>
-						<ChevronRight className="w-5 h-5 ml-0.5 text-muted-foreground" />
-					</Button>
-				</Tooltip>
-
-				{/* Go to last page button */}
-				{!hideJumpBtns && (
-					<Tooltip
-						content={
-							<div>
-								<p className="text-white text-xs font-light">Go to last page</p>
-							</div>
-						}
-					>
+				<Tooltip>
+					<Tooltip.Trigger>
 						<Button
 							disabled={lastPage || currentPage * itemsPerPage >= totalCount || isLoading}
 							onClick={() => {
 								// scrollTableToTop()
-								jumpToPage(totalNoOfPages)
+								handleNext?.()
 							}}
 							type="button"
-							className="h-10 w-10 rounded-full flex items-center justify-center p-0"
 							variant="outline"
+							className="h-10 w-10 rounded-full flex items-center justify-center p-0"
 							// className='h-8 justify-center border text-primary px-2 md:px-4 py-1 font-bold'
 						>
-							<ChevronsRight className="w-5 h-5 ml-0.5 text-muted-foreground" />
+							<ChevronRight className="w-5 h-5 ml-0.5 text-muted-foreground" />
 						</Button>
+					</Tooltip.Trigger>
+					<Tooltip.Content>
+						<p className="text-white text-xs font-light">Next</p>
+					</Tooltip.Content>
+				</Tooltip>
+
+				{/* Go to last page button */}
+				{!hideJumpBtns && (
+					<Tooltip>
+						<Tooltip.Trigger>
+							<Button
+								disabled={lastPage || currentPage * itemsPerPage >= totalCount || isLoading}
+								onClick={() => {
+									// scrollTableToTop()
+									jumpToPage(totalNoOfPages)
+								}}
+								type="button"
+								className="h-10 w-10 rounded-full flex items-center justify-center p-0"
+								variant="outline"
+								// className='h-8 justify-center border text-primary px-2 md:px-4 py-1 font-bold'
+							>
+								<ChevronsRight className="w-5 h-5 ml-0.5 text-muted-foreground" />
+							</Button>
+						</Tooltip.Trigger>
+
+						<Tooltip.Content>
+							<div>
+								<p className="text-white text-xs font-light">Go to last page</p>
+							</div>
+						</Tooltip.Content>
 					</Tooltip>
 				)}
 			</div>
